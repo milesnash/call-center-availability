@@ -1,0 +1,11 @@
+# Development notes
+
+Having chosen to complete the challenge using php, composer was the natural choice for writing a class or module.
+
+The first step was simply to initialise a composer library package in the repo along with the known development dependencies, phpunit and php-cs-fixer.
+
+I then spent some time considering what the interfaces of the package should be, based on the requirements, and defined the initial CallCenterConfigInterface and CallCenterInterface.  Following this, I carried out some research into what packages might already exist that satisfied all or some of the requirements.  I discovered [spatie/opening-hours](https://github.com/spatie/opening-hours) which looked like it could handle the opening hours logic and, having reviewed its current status and the tests in the codebase, decided I would adopt it.  It also allowed the call center opening hours and timezone to be easily configurable going forward, which was something I felt was important to ensure.
+
+Next, I wrote a stamp implementation of my interfaces and some tests for them, which initially would fail.  I then introduced the third-party dependency, updated my implementations to use it and observed that my tests passed.  After this, I went to add more tests for the in-hours scenario and realised I needed to clarify a point on closing hours.  Having got the clarification, I updated the logic and wrote more comprehensive tests.  There was a slight trade-off here as the nature of the third-party dependency means that we have to state a closing time in the config at one minute past the minute we actually close.  I felt this was a minor inconvenience which we could easily write code to compensate for if it turned out to be a deal-breaker.
+
+Having sorted out the opening times, my next step was to introduce logic to handle the minimum and maximum times that a pre-booked call can be requested at.  I decided the best approach was to represent these boundaries with a generic CallCenterResponseTimeInterface which, like the opening hours, would allow easy configuration of these values in the future with minimal additional effort, which I felt was equally important here.  This led on to an iterative process of questions, implementation, testing and refactor, ending in the write-up of the README.md to provide guidance to consumers of the package.

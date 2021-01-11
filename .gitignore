@@ -1,0 +1,8 @@
+/vendor/
+
+# phpunit
+.phpunit.cache/
+.phpunit.coverage-reports/
+
+# php-cs-fixer
+.php_cs.cache
