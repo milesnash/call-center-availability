@@ -1,4 +1,4 @@
-# Call Center composer package
+# Call center availability challenge
 
 ## Installation
 
